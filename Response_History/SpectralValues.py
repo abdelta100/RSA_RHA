@@ -36,18 +36,23 @@ def getFullSpectralDVA_T_range(eq_data: EQ_Data,T=None, step=0.02, zeta=0.15, g_
     if isinstance(T, NoneType):
         T = np.arange(0.05, 20, step=step)
 
-    D = np.zeros(len(T))
-    V = np.zeros(len(T))
-    A = np.zeros(len(T))
+    if isinstance(zeta, NoneType):
+        zeta = np.arange(0.01, 0.3, step=step)
+    elif isinstance(zeta, float):
+        zeta=[zeta]
+
+    D = np.zeros((len(T), len(zeta)))
+    V = np.zeros((len(T), len(zeta)))
+    A = np.zeros((len(T), len(zeta)))
 
     for t in range(0, len(T)):
-        print(T[t])
-        wn = 2 * pi / T[t]
-        disp, vel, accel = newmarkBeta_GroundMotion(ground_accel, time_arr, wn, zeta=zeta, g_units=g_units)
+        for z in range(0, len(zeta)):
+            wn = 2 * pi / T[t]
+            disp, vel, accel = newmarkBeta_GroundMotion(ground_accel, time_arr, wn, zeta=zeta[z], g_units=g_units)
 
-        D[t] = max(np.abs(disp))
-        V[t] = max(np.abs(vel))
-        A[t] = max(np.abs(accel))
+            D[t, z] = max(abs(disp))
+            V[t, z] = max(abs(vel))
+            A[t, z] = max(abs(accel))
 
     return D, V, A, T
 
@@ -61,16 +66,17 @@ def getFullSpectralDVA_zeta_range(eq_data, T, step=0.001, zeta=None,  g_units=Fa
     if isinstance(zeta, NoneType):
         zeta = np.arange(0.01, 0.3, step=step)
 
-    D = np.zeros(len(zeta))
-    V = np.zeros(len(zeta))
-    A = np.zeros(len(zeta))
+    D = np.zeros((len(T),len(zeta)))
+    V = np.zeros((len(T),len(zeta)))
+    A = np.zeros((len(T),len(zeta)))
 
-    for t in range(0, len(zeta)):
-        wn = 2 * pi / T
-        disp, vel, accel = newmarkBeta_GroundMotion(ground_accel, time_arr, wn, zeta=zeta[t],  g_units=g_units)
+    for t in range(0, len(T)):
+        for z in range(0, len(zeta)):
+            wn = 2 * pi / T
+            disp, vel, accel = newmarkBeta_GroundMotion(ground_accel, time_arr, wn, zeta=zeta[z],  g_units=g_units)
 
-        D[t] = max(abs(disp))
-        V[t] = max(abs(vel))
-        A[t] = max(abs(accel))
+            D[t,z] = max(abs(disp))
+            V[t,z] = max(abs(vel))
+            A[t,z] = max(abs(accel))
 
     return D, V, A, T
