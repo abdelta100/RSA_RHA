@@ -205,7 +205,7 @@ def newmarkBeta_GroundMotion(ground_accel_arr: np.ndarray, t_arr: np.ndarray, wn
 
     # TODO handle g here
     # disp_ground, vel_ground, accel_ground, time = groundMotionIntegrator([t_arr, ground_accel_arr], g_units=g_units)
-
+    # TODO remo0ve dependence on explicit ground accel array
     if g_units:
         accel_ground=ground_accel_arr*g
     else:

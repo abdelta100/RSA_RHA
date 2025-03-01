@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from Plotters.RSH_Plotters import plotRSH, plotDVASpectrum
 from Response_History.SpectralValues import getFullSpectralDVA_T_range
 
-file_path = 'EQ_List/el_centro_NS.txt'
+file_path = 'EQ_List/El_Centro-NS-Imperial_Valley-SI.txt'
 eq_data_read = np.loadtxt(file_path)
 
 time_arr=eq_data_read[:, 0]
