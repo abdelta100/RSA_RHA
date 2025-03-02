@@ -13,7 +13,7 @@ def tripartite_axis(axis):
     ylim = axis.get_ylim()
     axis.set_ylim(ylim)
     tick_font_size = axis.get_xticklabels()[0].get_fontsize()
-
+    # TODO use a label keyword
     axis.grid(True, which='both', color='k', linestyle='-', alpha=.3, lw=.3)
     axis.set_xlabel('Period (sec.)')
     axis.set_ylabel('Spectral Velocity')
@@ -64,12 +64,17 @@ def tripartite_axis(axis):
     return axis
 
 
-def tripartitePlot(D, V, A, T):
+def tripartitePlot(D, V, A, T, save=False, filename="tripartite_plot.png"):
     fig = plt.figure()
     ax = plt.gca()
     ax.plot(T, V, c='k')
     ax = tripartite_axis(ax)
     plt.show()
+
+    if save:
+        plt.savefig(filename)
+    plt.show()
+    return fig
 
 
 # fig = tripartitePLot(periods, PGV)

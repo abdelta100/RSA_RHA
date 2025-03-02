@@ -39,36 +39,40 @@ def plotDesignSpectrumStatistics(distribution, X, Y, cmap='viridis', title='Desi
         xlabel (str): Label for the X-axis.
         ylabel (str): Label for the Y-axis.
     """
-    # Create a figure and axis
-    plt.figure(figsize=(10, 6))
+
+    figure = plt.figure(figsize=(10, 6))
+
+    axes = figure.add_subplot(111)
+
     max_dist=np.max(distribution)
     min_dist=np.min(distribution)
     print(max_dist)
 
     if log_scale:
-        plt.xscale('log')
-        plt.yscale('log')
-        plt.gca().set_aspect('auto')
+        axes.xscale('log')
+        axes.yscale('log')
+        axes.gca().set_aspect('auto')
     # Plot the heatmap using pcolormesh or imshow
     if lognorm:
-        plt.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest', norm=LogNorm(vmin=0.01, vmax=max_dist))
+        pcm=axes.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest', norm=LogNorm(vmin=0.01, vmax=max_dist))
     else:
-        plt.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest')
-    # Add a color bar to show the scale of values
-    cbar = plt.colorbar()
+        pcm=axes.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest')
+
+    cbar = figure.colorbar(pcm, ax=axes)
     cbar.set_label('Distribution Value')
 
     # Add labels and title
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    axes.set_title(title)
+    axes.set_xlabel(xlabel)
+    axes.set_ylabel(ylabel)
 
-    # Optionally, add contour lines for additional visual detail
     if contour:
-        plt.contour(X, Y, distribution, 10, linewidths=0.5, colors='black')
+        axes.contour(X, Y, distribution, 10, linewidths=0.5, colors='black')
 
     # Show the plot
-    plt.show()
+    # plt.show()
+    # return plt.gcf()
+    return figure
 
 # Example Usage
 # Assuming distribution, X, and Y are already defined

@@ -71,7 +71,8 @@ def plotDVASpectrum_Aggregate(D, V, A, T, eq_list: list[EQ_Data], zeta_list=None
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.5)  # Adjust vertical spacing
-    plt.show()
+    # plt.show()
+    return figure
 
 
     def DVA_trilog_plot():

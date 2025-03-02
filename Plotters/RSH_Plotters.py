@@ -54,7 +54,9 @@ def plotDVASpectrum(D,V,A,T,zeta=None):
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.5)  # Adjust vertical spacing
-    plt.show()
+    # plt.show()
+
+    return figure
 
 def plotRSH(disp, vel, accel, time, g_accel=None):
     grid_on = False

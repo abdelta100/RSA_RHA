@@ -4,14 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plotDPVPASpectrum(D, V, A, T, zeta=None):
+def plotDPVPASpectrum(D, PV, PA, T, zeta=None):
     figure, axis = plt.subplots(3, 1, figsize=(10, 8))
     grid_on = False
     x_line = True
 
     if isinstance(zeta, (list, np.ndarray)):
         for z in range(len(zeta)):
-            axis[0].plot(T, A[:, z], label="z= " + str(zeta[z]))
+            axis[0].plot(T, PA[:, z], label="z= " + str(zeta[z]))
         axis[0].set_title("Pseudo-Acceleration")
         axis[0].set_xlabel('Time Period (s)')
         axis[0].set_ylabel('Acceleration')
@@ -21,7 +21,7 @@ def plotDPVPASpectrum(D, V, A, T, zeta=None):
             axis[0].axhline(y=0, color='black', linewidth=1.5)
 
         for z in range(len(zeta)):
-            axis[1].plot(T, V[:, z], label="z= " + str(zeta[z]))
+            axis[1].plot(T, PV[:, z], label="z= " + str(zeta[z]))
         axis[1].set_title("Pseudo-Velocity")
         axis[1].set_xlabel('Time Period(s)')
         axis[1].set_ylabel('Velocity')
@@ -43,10 +43,10 @@ def plotDPVPASpectrum(D, V, A, T, zeta=None):
     else:
         figure, axis = plt.subplots(3, 1)
 
-        axis[0].plot(T, A)
+        axis[0].plot(T, PA)
         axis[0].set_title("Spectral Acceleration")
 
-        axis[1].plot(T, V)
+        axis[1].plot(T, PV)
         axis[1].set_title("Spectral Velocity")
 
         axis[2].plot(T, D)
@@ -54,8 +54,8 @@ def plotDPVPASpectrum(D, V, A, T, zeta=None):
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.5)  # Adjust vertical spacing
-    plt.show()
-
+    # plt.show()
+    return figure
 
 def plotPseudoSpectrum(disp, vel, accel, time, g_accel=None):
     grid_on = False
