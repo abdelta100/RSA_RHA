@@ -12,21 +12,22 @@ def plotDesignSpectrum(design_spectrum, T, property= "Acceleration"):
     axis.set_xlabel('Time Period (s)')
     axis.set_ylabel(property)
     axis.grid(grid_on)
-    axis.legend(loc='upper right')
+    # axis.legend(loc='upper right')
     if x_line:
         axis.axhline(y=0, color='black', linewidth=1.5)
 
     plt.tight_layout()
     plt.subplots_adjust(hspace=0.5)  # Adjust vertical spacing
-    plt.show()
+    # plt.show()
+    return figure
 
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plotDesignSpectrumStatistics(distribution, X, Y, cmap='viridis', title='Design Spectrum Statistics',
-                                 xlabel='X-axis', ylabel='Y-axis', log_scale=False, contour=False, lognorm=False):
+def plotDesignSpectrumStatistics(distribution, X, Y, cmap='viridis', title='Probability Map for Design Spectrum',
+                                 xlabel='Time Period (s)', ylabel='Acceleration', log_scale=False, contour=False, lognorm=False, mode="mean"):
     """
     Plots a heatmap or contour plot of the distribution over the meshgrid (X, Y).
 
@@ -49,9 +50,9 @@ def plotDesignSpectrumStatistics(distribution, X, Y, cmap='viridis', title='Desi
     print(max_dist)
 
     if log_scale:
-        axes.xscale('log')
-        axes.yscale('log')
-        axes.gca().set_aspect('auto')
+        axes.set_xscale('log')
+        axes.set_yscale('log')
+        axes.set_aspect('auto')
     # Plot the heatmap using pcolormesh or imshow
     if lognorm:
         pcm=axes.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest', norm=LogNorm(vmin=0.01, vmax=max_dist))
@@ -59,8 +60,10 @@ def plotDesignSpectrumStatistics(distribution, X, Y, cmap='viridis', title='Desi
         pcm=axes.pcolormesh(X, Y, distribution, cmap=cmap, shading='nearest')
 
     cbar = figure.colorbar(pcm, ax=axes)
-    cbar.set_label('Distribution Value')
-
+    if mode=="mean":
+        cbar.set_label('Probability (Mass Function)')
+    else:
+        cbar.set_label('Cumulative Probability')
     # Add labels and title
     axes.set_title(title)
     axes.set_xlabel(xlabel)
