@@ -28,7 +28,7 @@ def loadExcelDVAPVPA(file_path):
         D = df['Displacement (D)'].values
         V = df['Velocity (V)'].values
         A = df['Acceleration (A)'].values
-        PV = df['Pseudo Displacement (PV)'].values
+        PV = df['Pseudo Velocity (PV)'].values
         PA = df['Pseudo Acceleration (PA)'].values
  # Shape (t, 1)
 
