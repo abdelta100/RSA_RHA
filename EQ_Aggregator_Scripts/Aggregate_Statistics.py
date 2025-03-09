@@ -3,16 +3,19 @@ from statistics import stdev
 import numpy as np
 import scipy.stats as stats
 
-def designSpectrum(DVA_arr, T, sigma=0):
+def meanSpectrum(DVA_arr, T, sigma=0):
 
     mean=np.mean(DVA_arr, axis=(1, 2))
     std=np.std(DVA_arr,axis=(1, 2))
 
-    design_spectrum=mean+sigma*std
+    # mean_peak_V=np.mean(np.max(DVA_arr, axis=(0,1)))
+    # mean_spectrum=(mean+sigma*std)/mean_peak_V
 
-    return design_spectrum, T
+    mean_spectrum = (mean + sigma * std)
 
-def designSpectrumStatistics(DVA_arr, T , mode='mean'):
+    return mean_spectrum, T
+
+def meanSpectrumStatistics(DVA_arr, T, mode='mean'):
     # Not using heavy tailed distribution
     max_lim=np.max(DVA_arr)*1.5
     p_lim=np.linspace(0, max_lim, 200)

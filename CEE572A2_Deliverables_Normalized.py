@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from EQ_Aggregator_Scripts.Aggregate_Statistics import meanSpectrum, designSpectrumStatistics
+from EQ_Aggregator_Scripts.Aggregate_Statistics import meanSpectrum, meanSpectrumStatistics
 from EQ_Aggregator_Scripts.Design_Spectrum_Plotter import plotDesignSpectrum, plotDesignSpectrumStatistics
 from EQ_Aggregator_Scripts.RS_Plotters_Aggregate import plotDVASpectrum_Aggregate
 from EQ_Aggregator_Scripts.Spectral_Values_Aggregate import getFullSpectralDVA_Aggregate, getFullSpectralDPVPA_Aggregate
@@ -132,7 +132,7 @@ plt.close(fig)
 
 # Plot probability heatmap, not required but looks nice, CHeck what spectrum is being plotted
 # heatmap savefig is problematic
-distribution, X, Y = designSpectrumStatistics(PV, T, mode='mean')
+distribution, X, Y = meanSpectrumStatistics(PV, T, mode='mean')
 fig = plotDesignSpectrumStatistics(distribution, X, Y, mode="mean", log_scale=False)
 fig.savefig(save_dir + "Collective Norm Spectral Probability Map" + file_typ)
 plt.close(fig)
