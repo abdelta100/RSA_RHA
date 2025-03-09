@@ -28,7 +28,7 @@ def tripartite_axis(axis, name):
     # TODO use a label keyword
     axis.grid(True, which='both', color='k', linestyle='-', alpha=.3, lw=.3)
     axis.set_xlabel('Period (sec.)')
-    axis.set_ylabel('Spectral Velocity')
+    axis.set_ylabel('Pseudo Velocity (m/s)')
     axis.set_title(name)
     a_c = 2 * np.pi / g_list[working_units]
     d_c = 1 / (2 * np.pi)
@@ -103,7 +103,9 @@ def tripartitePlot(D, V, A, T, name="Tri-Log Plot"):
     fig = plt.figure()
     fig.set_size_inches(6.5, 5)
     ax = plt.gca()
+    # ax.plot(T, V, c='k', alpha=0)
     ax.plot(T, V, c='k')
+
     ax = tripartite_axis(ax, name=name)
     # plt.show()
     #
@@ -115,13 +117,13 @@ def tripartitePlot(D, V, A, T, name="Tri-Log Plot"):
 def tripartitePlotSeries(D, V, A, T, name="Tri-Log Plot", legend_list=None):
     plt.rcParams['font.family'] = 'serif'
     fig = plt.figure()
-    fig.set_size_inches(6.5,5)
+    fig.set_size_inches(6,5)
     ax = plt.gca()
     # ax.plot(T, V, c='k')
     for i in range(V.shape[2]):
-        ax.plot(T,V[:,0,i],label=legend_list[i])
+        ax.plot(T,V[:,0,i],label=legend_list[i], lw=1)
     # plt.show()
-    ax.legend()
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     ax = tripartite_axis(ax, name=name)
     #
     # if save:
@@ -142,6 +144,12 @@ def format_number(num):
 accl = 0.00123  # Example acceleration value
 formatted_number = format_number(accl)
 
-# fig = tripartitePLot(periods, PGV)
-# # plt.savefig('bis_spectra.pdf')
-# plt.show()
+#
+# x = np.logspace(-2.1, 1.6, 100)  # Generates 100 points from 10^-1 to 10^2
+# y = x  # A function of x to plot
+#
+# fig=tripartitePlot(y,y,y,x, " ")
+# fig.savefig("Tripartite Blank2.png", dpi=600)
+# # fig = tripartitePLot(periods, PGV)
+# # # plt.savefig('bis_spectra.pdf')
+# # plt.show()
