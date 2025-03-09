@@ -5,18 +5,19 @@ import re
 from EQ_Data import EQ_Data
 
 
-def EQ_Loader(folder_path: str='EQ_List/', files: list[str]=None ):
+def EQ_Loader(folder_path: str='EQ_List/', files: list[str]=None , normalize=False):
 
     # folder_path = 'EQ_List/'
 
     if files is None:
         files = os.listdir(folder_path)
 
-    pattern = r"^(?P<place>[A-Za-z0-9_]+)-(?P<direction>NS|EW)-(?P<location>[A-Za-z0-9_]+)-(?P<units>[A-Za-z0-9_]+)\.(?P<extension>[a-z]+)$"
+    pattern = r"^(?P<place>[A-Za-z0-9_]+)-(?P<direction>NS|EW|00|90|L|250)-(?P<location>[A-Za-z0-9_]+)-(?P<units>[A-Za-z0-9_]+)\.(?P<extension>[a-z]+)$"
 
     EQ_List: list[EQ_Data]=[]
 
     for file_name in files:
+        print("Loading: "+file_name)
         file_path = os.path.join(folder_path, file_name)
         eq_data = np.loadtxt(file_path)
 
@@ -40,7 +41,7 @@ def EQ_Loader(folder_path: str='EQ_List/', files: list[str]=None ):
         time_arr = eq_data[:, 0]
         ground_accel = eq_data[:, 1]
 
-        eq=EQ_Data(time_arr, ground_accel, units=units, name=name, orientation=direction, location=location)
+        eq=EQ_Data(time_arr, ground_accel, units=units, name=name, orientation=direction, location=location, normalize=normalize)
         EQ_List.append(eq)
 
     return EQ_List
