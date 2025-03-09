@@ -17,75 +17,82 @@ from Response_Spectrum.PsuedoSpectralValues import getFullSpectralDPVPA_T_range
 from Constants import *
 import matplotlib.pyplot as plt
 
-eq_list = EQ_Loader()
+eq_list = EQ_Loader(normalize=True)
 # eq_list=EQ_Loader(files=['BearCity-EW-ParkHill-g.txt', 'Denali-90-AnchorageK202-g.txt', 'ChiChi_Taiwan04-NS-CHY024-g.txt'])
 # for eq in eq_list:
 #     disp, vel, accel = newmarkBeta_GroundMotion(eq.ground_accel, eq.time, wn=4 * np.pi, zeta=0.15, m=1, g_units=False)
 #     plotRSH(disp, vel, accel, eq.time)
 #     # plt.show()
 
-save_dir = 'CEE572_A2_Deliverables/'
+save_dir = 'CEE572_A2_Deliverables_Norm/'
 file_typ = ".png"
 #
-# excel_writer = pd.ExcelWriter(save_dir + "earthquake_spectral_data.xlsx", engine='openpyxl')
+
+
+
+excel_writer = pd.ExcelWriter(save_dir + "earthquake_spectral_data_norm_accel.xlsx", engine='openpyxl')
 T_range = np.arange(0.01, 10, 0.01)
-# for i, eq in enumerate(eq_list):
-#     print(eq.name)
-#     # # Plot spectral response plots individually
-#     # zeta = [0.05]
-#     # D, V, A, T = getFullSpectralDVA_T_range(eq, T=T_range, zeta=zeta)
-#     # fig=plotDVASpectrum(D, V, A, T, zeta, name=eq.name)
-#     # fig.savefig(save_dir+eq.meta_name+"Spectral_Response"+file_typ)
-#     # plt.close(fig)
-#     #
-#     # # Plot pseudo response plots individually
-#     # zeta = [0.05]
-#     # D, PV, PA, T = getFullSpectralDPVPA_T_range(eq, T=T_range, zeta=zeta)
-#     # fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name)
-#     # fig.savefig(save_dir + eq.meta_name+"PseudoSpectral_Response"+file_typ)
-#     # plt.close(fig)
-#
-#     zeta = [0.05]
-#     D, V, A, PV, PA, T = getFullSpectralAll(eq, T=T_range, zeta=zeta)
-#
-#     A = A / g_list[working_units]
-#     PA = PA / g_list[working_units]
-#
-#     fig = plotDVASpectrum(D, V, A, T, zeta, name=eq.name)
-#     fig.savefig(save_dir + eq.meta_name + "Actual_Response" + file_typ)
-#     plt.close(fig)
-#
-#     fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name)
-#     fig.savefig(save_dir + eq.meta_name + "Pseudo_Response" + file_typ)
-#     plt.close(fig)
-#
-#     fig = plotDVASpectrum(D, V, A, T, zeta, name=eq.name, isloglog=True)
-#     fig.savefig(save_dir + eq.meta_name + "Actual_Response LogLog" + file_typ)
-#     plt.close(fig)
-#
-#     fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name, isloglog=True)
-#     fig.savefig(save_dir + eq.meta_name + "Pseudo_Response LogLog" + file_typ)
-#     plt.close(fig)
-#
-#     df = pd.DataFrame({
-#         'Period (T)': T,
-#         'Displacement (D)': D[:, 0],
-#         'Velocity (V)': V[:, 0],
-#         'Acceleration (A)': A[:, 0],
-#         'Pseudo Velocity (PV)': PV[:, 0],
-#         'Pseudo Acceleration (PA)': PA[:, 0]
-#     })
-#
-#     sheet_name = eq.name[:31]
-#     df.to_excel(excel_writer, sheet_name=sheet_name, index=False)
-# # Save the Excel file
-# excel_writer._save()
+for i, eq in enumerate(eq_list):
+    print(eq.name)
+    # # Plot spectral response plots individually
+    # zeta = [0.05]
+    # D, V, A, T = getFullSpectralDVA_T_range(eq, T=T_range, zeta=zeta)
+    # fig=plotDVASpectrum(D, V, A, T, zeta, name=eq.name)
+    # fig.savefig(save_dir+eq.meta_name+"Spectral_Response Norm"+file_typ)
+    # plt.close(fig)
+    #
+    # # Plot pseudo response plots individually
+    # zeta = [0.05]
+    # D, PV, PA, T = getFullSpectralDPVPA_T_range(eq, T=T_range, zeta=zeta)
+    # fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name)
+    # fig.savefig(save_dir + eq.meta_name+"PseudoSpectral_Response Norm"+file_typ)
+    # plt.close(fig)
+
+    zeta = [0.05]
+    D, V, A, PV, PA, T = getFullSpectralAll(eq, T=T_range, zeta=zeta)
+
+    A = A / g_list[working_units]
+    PA = PA / g_list[working_units]
+
+    fig = plotDVASpectrum(D, V, A, T, zeta, name=eq.name)
+    fig.savefig(save_dir + eq.meta_name + "Actual_Response Norm" + file_typ)
+    plt.close(fig)
+
+    fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name)
+    fig.savefig(save_dir + eq.meta_name + "Pseudo_Response Norm" + file_typ)
+    plt.close(fig)
+
+    fig = plotDVASpectrum(D, V, A, T, zeta, name=eq.name, isloglog=True)
+    fig.savefig(save_dir + eq.meta_name + "Actual_Response LogLog Norm" + file_typ)
+    plt.close(fig)
+
+    fig = plotDPVPASpectrum(D, PV, PA, T, zeta, name=eq.name, isloglog=True)
+    fig.savefig(save_dir + eq.meta_name + "Pseudo_Response LogLog Norm" + file_typ)
+    plt.close(fig)
+
+    df = pd.DataFrame({
+        'Period (T)': T,
+        'Displacement (D)': D[:, 0],
+        'Velocity (V)': V[:, 0],
+        'Acceleration (A)': A[:, 0],
+        'Pseudo Velocity (PV)': PV[:, 0],
+        'Pseudo Acceleration (PA)': PA[:, 0]
+    })
+
+    sheet_name = eq.name[:31]
+    df.to_excel(excel_writer, sheet_name=sheet_name, index=False)
+# Save the Excel file
+excel_writer._save()
 
 # Load Data from excel
-D, V, A, PV, PA, T = loadExcelDVAPVPA(save_dir + "earthquake_spectral_data.xlsx")
+D, V, A, PV, PA, T = loadExcelDVAPVPA(save_dir + "earthquake_spectral_data_norm_accel.xlsx")
 # Following two steps not required i think
 # PLot collective spectral response plot
 zeta = [0.05]
+
+print(np.mean(np.max(PA, axis=(0,1))))
+print(np.mean(np.max(PV, axis=(0,1))))
+print(np.mean(np.max(D, axis=(0,1))))
 # D,V,A,T=getFullSpectralDVA_Aggregate(eq_list, T=T_range, zeta=zeta)
 # fig=plotDVASpectrum_Aggregate(D,V,A,T, eq_list, zeta_list=zeta, zeta=0.05, mode="History")
 # fig.savefig(save_dir+ "Collective Spectral Response"+file_typ)
@@ -102,21 +109,21 @@ zeta = [0.05]
 # T=T_range
 
 fig = plotDVASpectrum_Aggregate(D, V, A, T, eq_list, zeta_list=zeta, zeta=0.05, mode="History")
-fig.savefig(save_dir + "Collective Spectral Response" + file_typ)
+fig.savefig(save_dir + "Collective Spectral Response Norm" + file_typ)
 plt.close(fig)
 
 fig = plotDVASpectrum_Aggregate(D, PV, PA, T, eq_list, zeta_list=zeta, zeta=0.05, mode="Pseudo")
-fig.savefig(save_dir + "Collective Pseudo Spectral Response" + file_typ)
+fig.savefig(save_dir + "Collective Pseudo Spectral Response Norm" + file_typ)
 plt.close(fig)
 
 fig = plotDVASpectrum_Aggregate(D, V, A, T, eq_list, zeta_list=zeta, zeta=0.05, mode="History", isloglog=True,
                                 grid_on=True)
-fig.savefig(save_dir + "Collective Actual Response LogLog" + file_typ)
+fig.savefig(save_dir + "Collective Actual Response LogLog Norm" + file_typ)
 plt.close(fig)
 
 fig = plotDVASpectrum_Aggregate(D, PV, PA, T, eq_list, zeta_list=zeta, zeta=0.05, mode="Pseudo", isloglog=True,
                                 grid_on=True)
-fig.savefig(save_dir + "Collective Pseudo Spectral Response LogLog" + file_typ)
+fig.savefig(save_dir + "Collective Pseudo Spectral Response LogLog Norm" + file_typ)
 plt.close(fig)
 
 # plot mean spectral response (Clarify if pseudo or spectral acc, since disp is common to both)
@@ -126,8 +133,8 @@ plt.close(fig)
 # Plot probability heatmap, not required but looks nice, CHeck what spectrum is being plotted
 # heatmap savefig is problematic
 distribution, X, Y = designSpectrumStatistics(PV, T, mode='mean')
-fig = plotDesignSpectrumStatistics(distribution, X, Y, mode="mean", log_scale=True)
-fig.savefig(save_dir + "Collective Spectral Probability Map" + file_typ)
+fig = plotDesignSpectrumStatistics(distribution, X, Y, mode="mean", log_scale=False)
+fig.savefig(save_dir + "Collective Norm Spectral Probability Map" + file_typ)
 plt.close(fig)
 
 # Figure what needs to be in g units
@@ -137,12 +144,12 @@ for i, eq in enumerate(eq_list):
     # Plot tripartite plot for each
     fig = tripartitePlot(D[:, 0, i], PV[:, 0, i], PA[:, 0, i], T, name=eq.meta_name)
     # print("TBD")
-    fig.savefig(save_dir + eq.meta_name + "Tripartite_Plot" + file_typ, dpi=600)
+    fig.savefig(save_dir + eq.meta_name + "Tripartite_Plot Normalized" + file_typ, dpi=600)
     plt.close(fig)
     # tripartitePlot(D[:, 0, 1], V[:, 0, 1], A[:, 0, 1], T)
     pass
 
-fig = tripartitePlotSeries(D, PV, PA, T, name="Tripartite Plots", legend_list=[eq.name for eq in eq_list])
+fig = tripartitePlotSeries(D, PV, PA, T, name="Normalized Tripartite Plots", legend_list=[eq.name for eq in eq_list])
 fig.savefig(save_dir + "CollectiveTripartite_Plot" + file_typ, dpi=600)
 plt.close(fig)
 
@@ -164,13 +171,13 @@ PA = PA / g_list[working_units]
 
 # plot design spectrum at mean
 mdesignSpec, T = meanSpectrum(PV, T)
-fig = tripartitePlot(D, mdesignSpec, PA, T, name='Mean Spectrum')
+fig = tripartitePlot(D, mdesignSpec, PA, T, name='Mean Spectrum - Norm')
 fig.savefig(save_dir + "Mean Spectrum" + file_typ, dpi=600)
 plt.close(fig)
 # plot design spectrum at mean+1sigma (Clarify)
 
 mpsdesignSpec, T = meanSpectrum(PV, T, sigma=1)
-fig = tripartitePlot(D, mpsdesignSpec, PA, T, name='Mean + 1 sigma Spectrum')
+fig = tripartitePlot(D, mpsdesignSpec, PA, T, name='Mean + 1Sigma Spectrum - Norm')
 fig.savefig(save_dir + "Mean+1sig Spectrum" + file_typ, dpi=600)
 plt.close(fig)
 
@@ -187,7 +194,7 @@ quantities = {'Displacement (m)': D,
               'Pseudo_Acceleration (g)': PA}
 
 # Create an Excel writer object using 'openpyxl'
-with pd.ExcelWriter(save_dir + "Spectral_Quantities.xlsx", engine='openpyxl') as writer:
+with pd.ExcelWriter(save_dir + "Spectral_Quantities Normalized Accel.xlsx", engine='openpyxl') as writer:
     for quantity_name, data in quantities.items():
         # Create the DataFrame with T as the first column and the quantity data as the rest
         df = pd.DataFrame(data[:, 0, :], columns=col_name[1:])  # Exclude 'Time Period(s)' from column names
